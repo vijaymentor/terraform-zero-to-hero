@@ -304,16 +304,18 @@ variable "separator" { default = "."
 
 # the basic variables which is acceptable in terraform is ?
 
-Type	- Example
-string	- "/root/pets.txt"
-number	- 1
-bool	- true/false
-any	- Default Value
-list	- ["cat", "dog"]
-map	 - pet1 = cat pet2 = dog
-object	- Complex Data Structure
-tuple	- Complex Data Structure
 
+Type | Example
+:------|:------
+Type | Example
+string | "/root/pets.txt"
+number | 1
+bool | true/false
+any | Default Value
+list | ["cat", "dog"]
+map | pet1 = cat pet2 = dog
+object | Complex Data Structure
+tuple | Complex Data Structure
 
 # list
 
