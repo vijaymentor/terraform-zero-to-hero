@@ -327,7 +327,7 @@ type = list	0	1	2
 }
 
 
-vim maint.tf
+vim main.tf
 
 resource "random_pet" "my-pet" {
 prefix	= var.prefix[0]
@@ -338,3 +338,102 @@ Index | Value
 0 | Mr
 1 | Mrs
 2 | Sir
+
+
+# Map
+
+vim variables.tf
+
+variable file-content {
+  type = map
+  default = {
+      "statement1" = "we love pets1!"
+	  "statement2" = "we love animals!"
+	  }
+	 }
+
+vim main.tf
+
+resource local_file my-pet { 
+  filename	= "/root/pets.txt"
+  content = var.file-content["statement2"]
+ }
+ 
+ 
+# set
+
+vim variables.tf
+
+- **right**
+
+variable "prefix" {
+default = ["Mr", "Mrs", "Sir"] 
+type = set(string)
+}
+
+
+- **right** **duplicate values**
+
+variable "prefix" {
+default = ["Mr", "Sir", "Sir"] 
+type = set(string)
+}
+
+
+- **right**
+
+variable "prefix" {
+default = ["apple", "banana"] 
+type = set(string)
+}
+
+
+- **right** **duplicate values**
+
+variable "prefix" {
+default = ["apple", "banana" , "banana"] 
+type = set(string)
+}
+
+- there shjouldnt be any duplicate values here
+
+
+# objects 
+
+Index | Value
+:------|:------
+0 | Mr
+1 | Mrs
+2 | Sir
+
+
+Key | Example | Type
+:------|:------|:------
+name | bella | string
+color | brown | string
+age | 7 | number
+food | ["fish", "chicken", "turkey"] | list
+favorite_pet | TRUE | bool
+
+vim variables.tf
+
+
+variable	"bella"	{ 
+type = object({
+   name = string 
+   color = string 
+   age = number
+   food = list(string) 
+   favorite_pet = bool
+})
+
+default = {
+  name = "bella" 
+  color = "brown" 
+  age = 7
+  food = ["fish", "chicken", "turkey"] 
+  favorite_pet = true
+}
+}
+
+
