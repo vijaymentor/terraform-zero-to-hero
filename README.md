@@ -430,3 +430,29 @@ default = {
 }
 
 
+# tuples
+
+- tuples is similer to a list.
+- list uses elements of the same varaiable types.such as string or number.
+- Tuples uses elements of various variable types.The type of variable which used in tuples are mentioned into squre brackets.
+
+
+
+- **right**
+
+variable kitty {
+  type = tuple([string,number,bool])
+  default = ["cat", 7, true]
+}
+
+
+- **right** **wrong  values** **need to be sure correct values**
+
+variable kitty {
+  type = tuple([string,number,bool])
+  default = ["cat", 7, "dog"]
+}
+
+
+- this above will fail when you execute terraform plan command.coz tuple type expect string,number and boolean.
+
