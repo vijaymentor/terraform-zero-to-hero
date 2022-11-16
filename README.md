@@ -807,19 +807,18 @@ filename = "/root/mypet.txt"
 ```
 
 
-- ** variable approach 4 - called command line arguments**
+- **variable approach 4 - called command line arguments**
 ```
 terraform apply -var "filename=/root/best-pet.txt" ?
 
 ```
 
-- **in the above 4 approach what order the terraform can give priority.
+- **in the above 4 approach what order the terraform can give priority.**
 
 
-Order | Option | Description
+Order | Option | Description | Priority
 :------|:------|:------
-1 | bella | string
-1 | Environment Variables | first terraform will check this
-2 | terraform.tfvars | if environment variable is not available then terraform will check this
-3 | *.auto.tfvars (alphabetical order) | if both are not available then terraform will check this
-4 | -var or –var-file (command-line flags) | if above 3 are not available then terraform will check this
+1 | Environment Variables | first terraform will check this | 
+2 | terraform.tfvars | if environment variable is not available then terraform will check this | 
+3 | *.auto.tfvars (alphabetical order) | if both are not available then terraform will check this | 
+4 | -var or –var-file (command-line flags) | if above 3 are not available then terraform will check this | it will overide previous all.which means this will override any above
