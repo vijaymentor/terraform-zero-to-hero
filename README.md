@@ -456,3 +456,370 @@ variable kitty {
 
 - this above will fail when you execute terraform plan command.coz tuple type expect string,number and boolean.
 
+# quiz 1
+
+Which one of the below is not a valid data type in terraform?
+
+
+
+- set
+- list
+- map
+- tuple
+
+
+**array**
+
+# quiz 2
+
+Navigate to the directory /root/terraform-projects/variables. Which type does the variable called number belong to?
+
+```
+variable "name" {
+     type = string
+     default = "Mark"
+  
+}
+variable "number" {
+     type = bool
+     default = true
+  
+}
+variable "distance" {
+     type = number
+     default = 5
+  
+}
+variable "jedi" {
+     type = map
+     default = {
+     filename = "/root/first-jedi"
+     content = "phanius"
+     }
+  
+}
+
+variable "gender" {
+     type = list(string)
+     default = ["Male", "Female"]
+}
+variable "hard_drive" {
+     type = map
+     default = {
+          slow = "HHD"
+          fast = "SSD"
+     }
+}
+variable "users" {
+     type = set(string)
+     default = ["tom", "jerry", "pluto", "daffy", "donald", "jerry", "chip", "dale"]
+
+  
+}
+
+  
+
+
+
+
+```
+
+
+- list
+- string
+- number
+- **bool**
+
+# quiz 3
+
+How would you fetch the value of the key called slow from the variable called hard_drive in a terraform configuration?
+
+
+This variable is defined in the file variables.tf.
+
+```
+variable "hard_drive" {
+     type = map
+     default = {
+          slow = "HHD"
+          fast = "SSD"
+     }
+```
+
+- var.hard_drive.slow
+- **var.hard_drive["slow"]**
+- hard_drive["slow"]
+- var.hard_drive.0
+- var.hard_drive[0]
+
+
+# quiz 4
+
+What is the index of the element called Female in the variable called gender?
+
+```
+variable "gender" {
+     type = list(string)
+     default = ["Male", "Female"]
+```
+
+- **1**
+- var.gender["female"]
+- 0
+- Female
+- 3
+
+# quiz 5
+
+What is the type of variable called users?
+
+```
+variable "users" {
+     type = set(string)
+     default = ["tom", "jerry", "pluto", "daffy", "donald", "jerry", "chip", "dale"]
+
+  
+}
+
+```
+
+- list
+- list(string)
+- set
+- **set(string)**
+
+# quiz 6
+
+However, this variable has been defined incorrectly! Identify the mistake.
+
+```
+variable "users" {
+     type = set(string)
+     default = ["tom", "jerry", "pluto", "daffy", "donald", "jerry", "chip", "dale"]
+
+  
+}
+```
+
+
+- **duplicate elements (jerry is mentioned 2 times)**
+- elements should not be enclosed in double quotes
+- syntax error
+- type used is incorrect
+
+
+# quiz 7
+
+We have now updated the main.tf file in the same directory (/root/terraform-projects/variables) and added some resource blocks.
+Inspect them.
+
+
+```
+main.tf
+
+resource "local_file" "jedi" {
+     filename = "/root/first-jedi"
+     content = "phanius"
+}
+
+```
+
+# quiz 8
+
+What is the value for the argument called content used in the resource block for the resource jedi?
+
+```
+resource "local_file" "jedi" {
+     filename = "/root/first-jedi"
+     content = "phanius"
+}
+```
+
+
+- **phanius**
+- jedi
+- yoda
+- obi-wan
+- first-jedi
+
+# using variables in terraform
+
+
+- ** varaiable approach 1**
+
+```
+main.tf
+
+resource "local_file" "pet" { 
+filename = var.filename 
+content = var.content
+
+}
+
+resource "random_pet" "my-pet" { 
+prefix = var.prefix
+separator = var.separator 
+length = var.length
+}
+```
+
+```
+variable.tf
+
+variable "filename" {
+default = "/root/pets.txt"
+}
+variable "content" {
+default = "We love pets!"
+}
+variable "prefix" {
+default = "Mrs"
+}
+variable "separator" {
+default = "."
+}
+variable "length" {
+default = 2
+}
+
+```
+
+- ** varaiable approach 2**
+
+```
+main.tf
+
+resource "local_file" "pet" { 
+filename = var.filename 
+content = var.content
+
+}
+
+resource "random_pet" "my-pet" { 
+prefix = var.prefix
+separator = var.separator 
+length = var.length
+}
+
+```
+
+```
+variable.tf
+
+variable "filename" {
+
+}
+variable "content" {
+
+}
+variable "prefix" {
+
+}
+variable "separator" {
+
+}
+variable "length" {
+
+}
+
+```
+
+- **in this approach 2 whne you run terraform apply then you need to enter the values in a interactive mode.**
+
+- if you dont want to enter each value every time..then you pass all the values like this below while running terraform apply command itself.
+
+```
+terraform apply -var "filename=/root/pets.txt" -var "content=We lovePets!"	-var "prefix=Mrs" -var "separator=." -var "length=2"
+```
+
+- ** variable approach 3**
+```
+export TF_VAR_filename="/root/pets.txt"
+export TF_VAR_content="We love pets!"
+export TF_VAR_prefix="Mrs"
+export TF_VAR_separator="."
+export TF_VAR_length="2"
+```
+
+
+```
+terraform apply
+```
+- ** variable approach 4** **if we have lot of variables and values**
+
+```
+terraform.tfvars
+
+filename = "/root/pets.txt" 
+content = "We love pets!" 
+prefix = "Mrs"
+separator = "." 
+length = "2"
+
+```
+
+```
+terraform apply
+```
+
+- ** this file name can be terraform.tfvars or terraform.tfvars.json **
+
+- **if the file name is *.auto.tfvars  or  *.auto.tfvars.json means values will be automatically loaded**
+
+- if the file name is varaiables.tfvars then we need to run like this below
+
+```
+terraform apply -var-file variable.tfvars
+```
+
+# variable precedence [ which variable will take first priority]
+
+```
+main.tf
+
+resource local_file pet { 
+  filename = var.filename
+}
+```
+```
+variables.tf
+variable filename { 
+  type	= string
+}
+```
+
+- ** for the above we can pass value in 4 ways**
+
+- ** variable approach 1 called environment variables**
+```
+export TF_VAR_filename="/root/cats.txt" 
+```
+- ** variable approach 2 called terraform.tfvars**
+```
+terraform.tfvars
+filename = "/root/pets.txt"
+```
+
+- ** variable approach 3 called auto loading auto.tfvars **
+```
+variable.auto.tfvars
+filename = "/root/mypet.txt"
+```
+
+
+- ** variable approach 4 - called command line arguments**
+```
+terraform apply -var "filename=/root/best-pet.txt" ?
+
+```
+
+- **in the above 4 approach what order the terraform can give priority.
+
+
+Order | Option | Description
+:------|:------|:------
+1 | bella | string
+1 | Environment Variables | first terraform will check this
+2 | terraform.tfvars | if environment variable is not available then terraform will check this
+3 | *.auto.tfvars (alphabetical order) | if both are not available then terraform will check this
+4 | -var or –var-file (command-line flags) | if above 3 are not available then terraform will check this
