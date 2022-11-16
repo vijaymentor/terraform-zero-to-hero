@@ -817,7 +817,7 @@ terraform apply -var "filename=/root/best-pet.txt" ?
 
 
 Order | Option | Description | Priority
-:------|:------|:------
+:------|:------|:------|:------
 1 | Environment Variables | first terraform will check this | 
 2 | terraform.tfvars | if environment variable is not available then terraform will check this | 
 3 | *.auto.tfvars (alphabetical order) | if both are not available then terraform will check this | 
