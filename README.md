@@ -447,12 +447,12 @@ variable kitty {
 
 
 - **right** **wrong  values** **need to be sure correct values**
-
+```
 variable kitty {
   type = tuple([string,number,bool])
   default = ["cat", 7, "dog"]
 }
-
+```
 
 - this above will fail when you execute terraform plan command.coz tuple type expect string,number and boolean.
 
