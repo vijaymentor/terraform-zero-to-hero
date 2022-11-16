@@ -400,13 +400,6 @@ type = set(string)
 
 # objects 
 
-Index | Value
-:------|:------
-0 | Mr
-1 | Mrs
-2 | Sir
-
-
 Key | Example | Type
 :------|:------|:------
 name | bella | string
